@@ -4,10 +4,11 @@
 #include "daemon.h"
 
 #ifdef NO_START_FILES
+
 void __cdecl WinMainCRTStartup() {
 #else
-int WINAPI WinMain(HINSTANCE UNUSED hInstance, HINSTANCE UNUSED hPrevInstance,
-                   LPSTR lpCmdLine, int UNUSED nShowCmd) {
+  int WINAPI WinMain(HINSTANCE UNUSED hInstance, HINSTANCE UNUSED hPrevInstance,
+                     LPSTR lpCmdLine, int UNUSED nShowCmd) {
 #endif
   wchar_t pathBuf[MAX_PATH] = {0};
   GetModuleNameExtW(pathBuf, L".ini", MAX_PATH);
@@ -31,8 +32,7 @@ int WINAPI WinMain(HINSTANCE UNUSED hInstance, HINSTANCE UNUSED hPrevInstance,
       GetModuleHandleW(NULL),
       NULL);
 
-  if ( hWnd == NULL )
-  {
+  if (hWnd == NULL) {
     printError(TEXT("CreateWindowEx: main app window hWnd"));
     ExitProcess(4);
   }

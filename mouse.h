@@ -27,6 +27,7 @@ void setMouse(MouseConfig cfg) {
   }
   SystemParametersInfo(SPI_SETMOUSESPEED, 0, (PVOID) mouseSpeed, SPIF_SENDCHANGE);
 }
+
 void ProcessMouseConfig(MouseConfigId *cfg, size_t len) {
   if (cfg == NULL || len < 1) {
     return;
@@ -85,7 +86,6 @@ void ProcessMouseConfig(MouseConfigId *cfg, size_t len) {
   // unwind everything else we've allocated
   CoUninitialize();
 }
-
 
 
 #endif //MOUSE_CONFIG_MOUSE_H

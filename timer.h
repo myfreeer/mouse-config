@@ -5,6 +5,7 @@
 #include "base.h"
 #include "daemon.h"
 #include "mouse.h"
+
 #define TIMER_DELAY 200
 
 MouseConfigId *mouseCfg = NULL;
@@ -17,17 +18,18 @@ void TimerProc(
     UINT UNUSED Arg2,
     UINT_PTR UNUSED Arg3,
     DWORD UNUSED Arg4
-)
-{
+) {
   timer = 0;
   if (mouseCfg != NULL && cfgCount > 0) {
     ProcessMouseConfig(mouseCfg, cfgCount);
   }
 }
+
 void StartTimer(void) {
   if (timer != 0) {
     KillTimer(NULL, timer);
   }
   timer = SetTimer(NULL, 0, TIMER_DELAY, TimerProc);
 }
+
 #endif //MOUSE_CONFIG_TIMER_H
