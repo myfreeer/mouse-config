@@ -15,6 +15,7 @@ int WINAPI WinMain(HINSTANCE UNUSED hInstance, HINSTANCE UNUSED hPrevInstance,
   if (mouseCfg == NULL || cfgCount < 1) {
     ExitProcess(1);
   }
+  ProcessMouseConfig(mouseCfg, cfgCount);
   if (!InitWindowClass()) {
     ExitProcess(2);
   }
@@ -32,7 +33,7 @@ int WINAPI WinMain(HINSTANCE UNUSED hInstance, HINSTANCE UNUSED hPrevInstance,
 
   if ( hWnd == NULL )
   {
-    printError(TEXT("CreateWindowEx: main appwindow hWnd"));
+    printError(TEXT("CreateWindowEx: main app window hWnd"));
     ExitProcess(4);
   }
   MSG msg = {0};

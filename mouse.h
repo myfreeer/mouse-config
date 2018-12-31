@@ -18,7 +18,14 @@ typedef struct _MouseConfigId {
 
 void setMouse(MouseConfig cfg) {
   SystemParametersInfo(SPI_SETMOUSE, 0, cfg.mouseParams, SPIF_SENDCHANGE);
-  SystemParametersInfo(SPI_SETMOUSESPEED, 0, (PVOID) cfg.mouseSpeed, SPIF_SENDCHANGE);
+  intptr_t mouseSpeed = cfg.mouseSpeed;
+  if (mouseSpeed < 1) {
+    mouseSpeed = 1;
+  }
+  if (mouseSpeed > 20) {
+    mouseSpeed = 20;
+  }
+  SystemParametersInfo(SPI_SETMOUSESPEED, 0, (PVOID) mouseSpeed, SPIF_SENDCHANGE);
 }
 void ProcessMouseConfig(MouseConfigId *cfg, size_t len) {
   if (cfg == NULL || len < 1) {
@@ -62,6 +69,7 @@ void ProcessMouseConfig(MouseConfigId *cfg, size_t len) {
     if (returnedCount > 0) {
       isSet = true;
       setMouse(mouseConfigId.cfg);
+      break;
     }
   }
   if (!isSet && defaultCfg) {

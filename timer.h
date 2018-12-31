@@ -7,8 +7,8 @@
 #include "mouse.h"
 #define TIMER_DELAY 200
 
-_Atomic (MouseConfigId *) mouseCfg = NULL;
-_Atomic DWORD cfgCount = 0;
+MouseConfigId *mouseCfg = NULL;
+DWORD cfgCount = 0;
 
 _Atomic UINT_PTR timer = 0;
 
