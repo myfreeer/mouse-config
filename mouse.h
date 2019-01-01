@@ -48,7 +48,8 @@ void ProcessMouseConfig(MouseConfigId *cfg, size_t len) {
                        RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL);
 
   // connect to WMI
-  hr = CoCreateInstance(&CLSID_WbemLocator, 0, CLSCTX_INPROC_SERVER, &IID_IWbemLocator, (LPVOID *) &locator);
+  hr = CoCreateInstance(&CLSID_WbemLocator, 0, CLSCTX_INPROC_SERVER,
+                        &IID_IWbemLocator, (LPVOID *) &locator);
   EXIT_ON_ERROR(hr, CoCreateInstance);
   COM_CALL(hr, locator, ConnectServer, resource, NULL, NULL, NULL, 0, NULL, NULL, &services);
   if (services == NULL) {
@@ -79,7 +80,7 @@ void ProcessMouseConfig(MouseConfigId *cfg, size_t len) {
   COM_CALL(hr, services, Release);
   Exit:
   if (locator != NULL) {
-    COM_CALL(hr, locator, Release);
+    locator->lpVtbl->Release(locator);
   }
   SysFreeString(language);
   SysFreeString(resource);

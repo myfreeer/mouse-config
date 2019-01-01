@@ -2,6 +2,7 @@
 #ifndef MOUSE_CONFIG_INI_H
 #define MOUSE_CONFIG_INI_H
 
+#define MOUSE_CONFIG_INI_SECTION L"Mouse"
 
 #include "mouse.h"
 
@@ -32,11 +33,13 @@ MouseConfigId *readIniFile(LPWSTR lpFileName, DWORD *countPtr) {
   if (!GetFileSizeEx(hFile, &fileSize)) {
     return NULL;
   }
+  CloseHandle(hFile);
   wchar_t *sectionBuf = calloc(fileSize.LowPart, sizeof(wchar_t));
   if (sectionBuf == NULL) {
     return NULL;
   }
-  DWORD length = GetPrivateProfileSectionW(L"Mouse", sectionBuf, fileSize.LowPart, lpFileName);
+  DWORD length = GetPrivateProfileSectionW(MOUSE_CONFIG_INI_SECTION,
+                                           sectionBuf, fileSize.LowPart, lpFileName);
   DWORD count = 0;
   for (DWORD i = 0; i < length; ++i) {
     if (sectionBuf[i] == L'\0') {
