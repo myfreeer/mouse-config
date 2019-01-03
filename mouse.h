@@ -5,16 +5,18 @@
 #include "wmi.h"
 #include <stdbool.h>
 
+#define DeviceIdMaxLen 256
+#define DEFAULT_CFG_ID L"Default"
+
 typedef struct _MouseConfig {
   DWORD mouseSpeed;
   DWORD mouseParams[3];
 } MouseConfig;
-#define DeviceIdMaxLen 256
+
 typedef struct _MouseConfigId {
   MouseConfig cfg;
   wchar_t deviceId[DeviceIdMaxLen];
 } MouseConfigId;
-#define DEFAULT_CFG_ID L"Default"
 
 void setMouse(MouseConfig cfg) {
   SystemParametersInfo(SPI_SETMOUSE, 0, cfg.mouseParams, SPIF_SENDCHANGE);

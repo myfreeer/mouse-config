@@ -66,18 +66,9 @@ INT_PTR WINAPI WinProcCallback(
       break;
 
     case WM_SETFOCUS:
-      SetFocus(hEditWnd);
-
       break;
 
     case WM_SIZE:
-      // Make the edit control the size of the window's client area.
-      MoveWindow(hEditWnd,
-                 0, 0,                  // starting x- and y-coordinates
-                 LOWORD(lParam),        // width of client area
-                 HIWORD(lParam),        // height of client area
-                 TRUE);                 // repaint window
-
       break;
 
     case WM_DEVICECHANGE: {
