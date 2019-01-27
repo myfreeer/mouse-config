@@ -1,5 +1,6 @@
 #include "base.h"
 #include "mouse.h"
+#include "keyboard.h"
 #include "ini.h"
 #include "daemon.h"
 
@@ -12,11 +13,12 @@ void __cdecl WinMainCRTStartup() {
 #endif
   wchar_t pathBuf[MAX_PATH] = {0};
   GetModuleNameExtW(pathBuf, L".ini", MAX_PATH);
-  mouseCfg = readIniFile(pathBuf, &cfgCount);
-  if (mouseCfg == NULL || cfgCount < 1) {
+  readIniFile(pathBuf, &mouseCfg, &mouseCfgCount, &kbdCfg, &kbdCfgCount);
+  if ((mouseCfg == NULL || mouseCfgCount < 1) &&
+      (kbdCfg == NULL || kbdCfgCount < 1)) {
     ExitProcess(1);
   }
-  ProcessMouseConfig(mouseCfg, cfgCount);
+  ExecConfig(mouseCfg, mouseCfgCount, kbdCfg, kbdCfgCount);
   if (!InitWindowClass()) {
     ExitProcess(2);
   }

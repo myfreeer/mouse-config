@@ -5,11 +5,14 @@
 #include "base.h"
 #include "daemon.h"
 #include "mouse.h"
+#include "keyboard.h"
 
 #define TIMER_DELAY 200
 
 MouseConfigId *mouseCfg = NULL;
-DWORD cfgCount = 0;
+DWORD mouseCfgCount = 0;
+KeyboardConfig *kbdCfg = NULL;
+DWORD kbdCfgCount = 0;
 
 _Atomic UINT_PTR timer = 0;
 
@@ -19,9 +22,12 @@ void TimerProc(
     UINT_PTR UNUSED Arg3,
     DWORD UNUSED Arg4
 ) {
-  timer = 0;
-  if (mouseCfg != NULL && cfgCount > 0) {
-    ProcessMouseConfig(mouseCfg, cfgCount);
+  if ((mouseCfg != NULL && mouseCfgCount > 0) || (kbdCfg != NULL && kbdCfgCount > 0)) {
+    ExecConfig(mouseCfg, mouseCfgCount, kbdCfg, kbdCfgCount);
+  }
+  if (timer != 0) {
+    KillTimer(NULL, timer);
+    timer = 0;
   }
 }
 

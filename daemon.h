@@ -3,6 +3,7 @@
 #define MOUSE_CONFIG_DAEMON_H
 
 #include "mouse.h"
+#include "keyboard.h"
 #include "timer.h"
 #include <dbt.h>
 #include <usbiodef.h>
@@ -76,7 +77,7 @@ INT_PTR WINAPI WinProcCallback(
       switch (wParam) {
         case DBT_DEVICEARRIVAL:
         case DBT_DEVICEREMOVECOMPLETE:
-          if (mouseCfg != NULL && cfgCount > 0) {
+          if (mouseCfg != NULL && mouseCfgCount > 0) {
             StartTimer();
           }
           break;
